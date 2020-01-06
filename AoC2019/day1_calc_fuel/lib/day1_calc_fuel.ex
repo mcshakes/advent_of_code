@@ -9,9 +9,26 @@ defmodule Day1CalcFuel do
     For a mass of 1969, the fuel required is 654.
     For a mass of 100756, the fuel required is 33583.
   """
-  def calculate_fuel(fuel) do
-    fuel_needed = fuel |> divide |> round_down |> remove_two
+  def prep_file_input do
+    {:ok, file} = File.read("lib/inputs.txt")
+
+    # input_arr = String.split(file, "\n")
+
+    # int_arr = Enum.map(input_arr, fn x -> String.to_integer(x) end)
+
+    # answers = Enum.map(int_arr, fn x -> calculate_fuel(x) end )
+
+    file 
+      |> String.split("\n")
+      |> Enum.map(fn x -> String.to_integer(x) end)
+      |> Enum.map(fn x -> calculate_fuel(x) end )
+      |> Enum.join("\n")
       
+      File.write("lib/fuel.txt", file)
+  end
+
+  def calculate_fuel(fuel) do
+    fuel_needed = fuel |> divide |> round_down |> remove_two      
   end
 
   def divide(fuel) do
