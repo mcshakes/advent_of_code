@@ -8,16 +8,13 @@ defmodule ProgramAlarm do
 
   def build_alarm do
     data_set = prep_file_input
+      |> Enum.with_index
+      # Build an index to reference as you go through
 
-    fix = data_set
-    # Step 1: Run opcode 1
-    # Step 2: Step forward 4 positions
-    # run an opcode
-    # always steppign four positiosn forward
+
 
   end
-
-  # Takes two positions
+  
   def opcode_one(pos1, pos2) do
     # adds arr[pos1] + arr[pos2]
     # writes it in arr[pos3]
