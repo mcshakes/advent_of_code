@@ -8,11 +8,21 @@ defmodule ProgramAlarm do
 
   def build_alarm do
     data_set = prep_file_input
-      |> Enum.with_index
+      
+    
+
       # Build an index to reference as you go through
 
 
 
+  end
+
+  def iterate([a, b, c, d | tail]) do
+    [a, b, c, d | iterate(rest)]
+  end
+
+  def iterate([]) do
+    []
   end
   
   def opcode_one(pos1, pos2) do
