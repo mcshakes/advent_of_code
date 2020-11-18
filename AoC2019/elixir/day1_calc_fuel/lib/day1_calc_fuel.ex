@@ -12,18 +12,15 @@ defmodule Day1CalcFuel do
   def prep_file_input do
     {:ok, file} = File.read("lib/inputs.txt")
 
+    file
+    |> String.split("\n")
+    |> Enum.map(fn x -> String.to_integer(x) end)
 
-    file 
-      |> String.split("\n")
-      |> Enum.map(fn x -> String.to_integer(x) end) 
-      
-      # Portion below would complete part one
-      # |> Enum.map(fn x -> calculate_fuel(x) end ) 
+    # Portion below would complete part one
+    # |> Enum.map(fn x -> calculate_fuel(x) end )
 
-      |> Enum.map(&wish_for_total_fuel/1)
-      |> Enum.sum()
-
-
+    |> Enum.map(&wish_for_total_fuel/1)
+    |> Enum.sum()
   end
 
   # @spec wish_for_total_fuel(mass) :: integer
@@ -31,23 +28,24 @@ defmodule Day1CalcFuel do
     case calculate_fuel(mass) do
       fuel when fuel > 0 ->
         fuel + wish_for_total_fuel(fuel)
-      _ -> 0
+
+      _ ->
+        0
     end
   end
 
-
   def calculate_fuel(fuel) do
-    fuel 
-      |> divide 
-      |> round_down 
-      |> remove_two
+    fuel
+    |> divide
+    |> round_down
+    |> remove_two
   end
 
   def divide(fuel) do
     fuel / 3
   end
 
-  def round_down(fuel) do 
+  def round_down(fuel) do
     Float.floor(fuel) |> trunc
   end
 
