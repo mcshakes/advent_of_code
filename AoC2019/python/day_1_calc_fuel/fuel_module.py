@@ -17,13 +17,14 @@ class FuelModule:
                 self.refined_fuel.append(fuel)
 
     def recursive_fuel_breakdown(self, fuel_input):
-        if (fuel_input / 3 - 2) < 0:
-            self.fuel_required.append(fuel_input)
-        else:
+        # import ipdb
+        # ipdb.set_trace()
+
+        while (fuel_input / 3 - 2) > 0:
             f_input = fuel_input / 3
             f_input = math.floor(f_input) - 2
             self.fuel_required.append(f_input)
-            self.recursive_fuel_breakdown(f_input)
+            return self.recursive_fuel_breakdown(f_input)            
 
     def calculate(self):
         f = self.refined_fuel
