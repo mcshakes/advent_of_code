@@ -12,28 +12,56 @@ class IntcodeComputer:
             self.intcode = [int(i) for i in as_string]
 
     def compute_sequence(self):
-        for op, inp1, inp2, out in self.group_by(self.intcode, 4):
-            if op == 1:
-                self.add(inp1, inp2, out, self.intcode)
-            elif op == 2:
-                self.multiply(inp1, inp2, out, self.intcode)
-            elif op == 99:
+        opcodes = self.intcode
+
+        position = 0
+
+        while opcodes[position] != 99:
+            position1 = opcodes[position + 1]
+            position2 = opcodes[position + 2]
+            destination = opcodes[position + 3]
+
+            if opcodes[position] == 1:
+                opcodes[destination] = opcodes[position1] + opcodes[position2]
+            elif opcodes[position] == 2:
+                opcodes[destination] = opcodes[position1] * opcodes[position2]
+            else:
+                print('Unknown Opcode')
                 break
-            return self.intcode
+            position += 4
 
-    def group_by(self, my_list, chunk_size, fillvalue=None):
-        args = [iter(my_list)] * chunk_size
-        return zip(*args)
+        return opcodes
 
-    def add(self, pos1, pos2, output, opcode):
-        new_value = opcode[pos1] + opcode[pos2]
-        opcode[output] = new_value
-        return opcode
+    # def compute_sequence(self):
+    #     args = [iter(self.intcode)] * 4
+    #     # for op, inp1, inp2, out in self.group_by(self.intcode, 4):
+    #     for op, inp1, inp2, dest in zip(*args):
+    #         import ipdb
+    #         ipdb.set_trace()
+    #         if op == 1:
+    #             self.add(inp1, inp2, dest)
+    #         elif op == 2:
+    #             self.multiply(inp1, inp2, dest)
+    #         elif op == 99:
+    #             break
+    #         else:
+    #             print('Unknown Opcode')
+    #             break
+    #         return self.intcode
 
-    def multiply(self, pos1, pos2, output, opcode):
-        new_value = opcode[pos1] * opcode[pos2]
-        opcode[output] = new_value
-        return opcode
+    # def group_by(self, my_list, chunk_size, fillvalue=None):
+    #     args = [iter(my_list)] * chunk_size
+    #     return zip(*args)
+
+    def add(self, pos1, pos2, dest):
+
+        new_value = self.intcode[pos1] + self.intcode[pos2]
+        self.intcode[dest] = new_value
+
+    def multiply(self, pos1, pos2, dest):
+        new_value = self.intcode[pos1] * self.intcode[pos2]
+        self.intcode[dest] = new_value
+        # return opcode
 
 
 IC = IntcodeComputer()
