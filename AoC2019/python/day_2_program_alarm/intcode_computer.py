@@ -26,25 +26,28 @@ class IntcodeComputer:
     def __init__(self, intcode_file=INTCODE_LOCATION):
         with open(intcode_file, 'r') as inputfile:
             as_string = inputfile.read().split(",")
-            
             self.intcode = [int(i) for i in as_string]
 
     def compute_sequence(self):
-        # 2) Look at position 0. Here, you find an opcode - either 1, 2, or 99.
-        print(self.intcode)
-        # for op_set in range(self.intcode, 4):
-        #     print("HERE", op_set)
+        for op, inp1, inp2, out in self.group_by(self.intcode, 4):
+            if op == 1:
+                self.add(inp1, inp2, out, self.intcode)
+            elif op == 2:
+                self.multiply(inp1, inp2, out)
 
-        # In this, method, you move four at a time
-        # initial = self.intcode[0]
+    def group_by(self, my_list, chunk_size, fillvalue=None):
+        args = [iter(my_list)] * chunk_size
+        return zip(*args)
 
-        # if initial is not None and initial == 1:
-        #     add(self.intcode)
-        # else:
-        #     return "HMM Nothing here"
+    def add(self, pos1, pos2, output, opcode):
+        new_value = opcode[pos1] + opcode[pos2]
+        opcode[output] = new_value
+        return opcode
 
-    def add(self, intcode):
-        pass
+    def multiply(self, pos1, pos2, output):
+        print("POSITION1", pos1)
+        print("POSITION1", pos2)
+        print("WHERE IT GOES", output)
 
 
 IC = IntcodeComputer()
