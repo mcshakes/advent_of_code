@@ -11,8 +11,9 @@ class IntcodeComputer:
             as_string = inputfile.read().split(",")
             self.intcode = [int(i) for i in as_string]
 
-    def compute_sequence(self):
-        opcodes = self.intcode
+    def compute_sequence(self, opcodes=None):
+        if opcodes is None:
+            opcodes = self.intcode
 
         position = 0
 
@@ -54,7 +55,6 @@ class IntcodeComputer:
     #     return zip(*args)
 
     def add(self, pos1, pos2, dest):
-
         new_value = self.intcode[pos1] + self.intcode[pos2]
         self.intcode[dest] = new_value
 
