@@ -1,3 +1,4 @@
 .DS_Store
 input.txt
-__pycache__
+__pycache_
+.bundle
