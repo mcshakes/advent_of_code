@@ -2,22 +2,27 @@ require_relative "./directions"
 require "pry"
 
 class Santa
-    attr_accessor :current_floor
+    attr_accessor :current_floor, :directions
+
     MOVE_UP = "("
     MOVE_DOWN = ")"
 
     def initialize()
         @current_floor = 0
+        @directions=[]
     end
 
-    def parse_directions
-        directions = Directions.new.data.split("")
-        directions.each do |thing|
-            follow_direction(thing)
+    def set_directions
+        @directions = Directions.new.data.split("")        
+    end
+
+    def follow_directions(dir_arr)
+        dir_arr.each do |thing|
+            move(thing)
         end
     end
 
-    def follow_direction(step)
+    def move(step)
         if step == MOVE_UP
             go_up
         elsif step == MOVE_DOWN
@@ -39,7 +44,8 @@ class Santa
 end
 
 santa = Santa.new
-santa.parse_directions
+santa.set_directions
+santa.follow_directions(santa.directions)
 santa.to_s
 
 
