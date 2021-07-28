@@ -13,10 +13,15 @@ describe Santa do
     describe "go up a floor" do
         it "takes him to first floor" do
             santa = Santa.new
-            # read direction to go up
-            # santa goes up
-            santa.go_up
-            expect(santa.current_floor).to eq(0)
+            santa.follow_direction("(")                        
+            expect(santa.current_floor).to eq(1)
+        end
+
+        it "takes him to second floor" do
+            santa = Santa.new
+            
+            santa.follow_direction("(")                        
+            expect(santa.current_floor).to eq(2)
         end
     end
 end
