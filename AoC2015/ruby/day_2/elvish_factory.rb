@@ -1,5 +1,6 @@
 require "pry"
 require_relative "./present"
+require_relative "./ribbon"
 
 class ElvishFactory
 
@@ -20,19 +21,26 @@ class ElvishFactory
     def create_order_flow
         orders = read_intake_orders
         needed_sq_footage = []
+        needed_ribbon = []
 
         orders.map do |order|
             cleaned = order.strip
             gift_hash = parse_order(cleaned)
             pres_obj = build_order(gift_hash)
-            
 
+            ribbon = Ribbon.new(pres_obj)
+            ribbon_reqs = ribbon.total_required_ribbon
+
+            needed_ribbon << ribbon_reqs
             needed_sq_footage << pres_obj.total_required_paper
         end
 
-        needed_sq_footage.inject(0, &:+)
+        r = needed_ribbon.inject(0, &:+)
+        paper = needed_sq_footage.inject(0, &:+)
+        p "Needed Ribbons: #{r} and Needed paper: #{paper}"
+        
     end
 end
 
 ev = ElvishFactory.new
-p ev.create_order_flow
+ev.create_order_flow

@@ -1,3 +1,4 @@
+require "pry"
 
 class Ribbon
     def initialize(present)
@@ -9,7 +10,9 @@ class Ribbon
     end
 
     def length_needed
-        @present.length + @present.length + @present.width + @present.width
+        attrs = [@present.length, @present.width, @present.height].sort
+        lowest, low = attrs
+        (2 * lowest) + (2 * low)
     end
 
     def total_required_ribbon
